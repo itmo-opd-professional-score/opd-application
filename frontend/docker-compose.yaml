@@ -4,7 +4,7 @@ services:
     container_name: frontend
     image: node:23
     ports:
-      - "8070:8070"
+      - "8070:5173"
     entrypoint: /bin/bash /home/startup.sh
     volumes:
       - ./node:/home/

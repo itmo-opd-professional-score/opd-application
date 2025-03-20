@@ -51,8 +51,8 @@ services:
     image: node:23
     container_name: backend
     ports:
-      - "8071:8071"
-      - "8072:8072"
+      - "8071:3000"
+      - "8072:3080"
     entrypoint: /bin/bash /home/startup.sh
     volumes:
       - ./node:/home/
