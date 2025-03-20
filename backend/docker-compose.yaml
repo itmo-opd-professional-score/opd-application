@@ -18,7 +18,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - esdata:/usr/share/elasticsearch/data
+      - ./esdata:/usr/share/elasticsearch/data
     networks:
       - opd-internal
 
@@ -28,7 +28,7 @@ services:
       - SERVERNAME=kibana
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     volumes:
-      - kibanadata:/usr/share/kibana/data
+      - ./kibanadata:/usr/share/kibana/data
     depends_on:
       - elasticsearch
     networks:
@@ -39,9 +39,9 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_PASSWORD:
     volumes:
-      - opd-professional-score:/var/lib/postgresql/data
+      - ./postgres:/var/lib/postgresql/data
     networks:
       - opd-internal
 
@@ -58,13 +58,6 @@ services:
       - ./.env
     networks:
       - opd-internal
-
-volumes:
-  opd-professional-score:
-  esdata:
-    driver: local
-  kibanadata:
-    driver: local
 
 networks:
   opd-internal:
