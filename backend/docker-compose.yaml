@@ -1,0 +1,84 @@
+name: "opd-professional-score"
+services:
+  elasticsearch:
+    build:
+      context: docker
+      dockerfile: Dockerfile
+    image: elasticsearch:8.2.0
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=docker-cluster
+      - cluster.initial_master_nodes=elasticsearch
+      - discovery.seed_hosts=elasticsearch
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g -Dcom.sun.management.jmxremote=false"
+      - xpack.security.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - opd-internal
+
+  kibana:
+    image: kibana:8.2.0
+    environment:
+      - SERVERNAME=kibana
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    volumes:
+      - kibanadata:/usr/share/kibana/data
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - opd-internal
+
+  postgres:
+    container_name: opd-professional-score-postgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - opd-professional-score:/var/lib/postgresql/data
+    networks:
+      - opd-internal
+
+  backend:
+    image: node:23
+    container_name: backend
+    ports:
+      - "8071:8071"
+      - "8072:8072"
+    entrypoint: /bin/bash /home/startup.sh
+    volumes:
+      - ./node:/home/
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: Qgrw183Vdk73.
+      DB_DATABASE: postgres
+      SMTP_TRANSPORT: smtps://esc-notes@yandex.ru:qqkgekgrxcotsxzx@smtp.yandex.ru
+      SMTP_USER: esc-notes@yandex.ru
+      ELASTICSEARCH_USERNAME: fvs10072006@gmail.com
+      ELASTICSEARCH_PASSWORD: xyrkev-nufrud-5Mokvo
+      ELASTIC_HOST: http://elastic:9200
+    networks:
+      - opd-internal
+
+volumes:
+  opd-professional-score:
+  esdata:
+    driver: local
+  kibanadata:
+    driver: local
+
+networks:
+  internal:
+    name: opd-internal
+  external:
+    name: opd-external
