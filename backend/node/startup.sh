@@ -5,7 +5,7 @@ apt install git
 
 cd /app
 
-git clone https://github.com/scobca/opd-professional-score.git .
+git clone https://github.com/itmo-opd-professional-score/opd-professional-score.git .
 
 cp /home/jwt.conf.ts /app/src/config/jwt.conf.ts
 
