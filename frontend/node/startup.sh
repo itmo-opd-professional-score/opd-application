@@ -11,4 +11,4 @@ cp /home/apiConf.ts /app/src/api/apiConf.ts
 
 npm i --force
 
-npm run dev
+npm run dev --host
