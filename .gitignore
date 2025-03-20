@@ -1,2 +1,5 @@
 backend/node/jwt.conf.ts
 frontend/node/apiConf.ts
+.idea
+.env
+backend/.env

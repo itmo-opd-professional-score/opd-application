@@ -54,17 +54,8 @@ services:
     entrypoint: /bin/bash /home/startup.sh
     volumes:
       - ./node:/home/
-    environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_USERNAME: postgres
-      DB_PASSWORD: Qgrw183Vdk73.
-      DB_DATABASE: postgres
-      SMTP_TRANSPORT: smtps://esc-notes@yandex.ru:qqkgekgrxcotsxzx@smtp.yandex.ru
-      SMTP_USER: esc-notes@yandex.ru
-      ELASTICSEARCH_USERNAME: fvs10072006@gmail.com
-      ELASTICSEARCH_PASSWORD: xyrkev-nufrud-5Mokvo
-      ELASTIC_HOST: http://elastic:9200
+    env_file:
+      - ./.env
     networks:
       - opd-internal
 
