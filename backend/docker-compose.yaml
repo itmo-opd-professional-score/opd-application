@@ -29,8 +29,6 @@ services:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     volumes:
       - kibanadata:/usr/share/kibana/data
-    ports:
-      - "5601:5601"
     depends_on:
       - elasticsearch
     networks:
@@ -78,7 +76,7 @@ volumes:
     driver: local
 
 networks:
-  internal:
+  opd-internal:
     name: opd-internal
-  external:
+  opd-external:
     name: opd-external
