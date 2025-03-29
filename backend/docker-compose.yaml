@@ -1,6 +1,6 @@
 name: "opd-professional-score"
 services:
-  elasticsearch:
+  elastic:
     build:
       context: docker
       dockerfile: Dockerfile
@@ -26,11 +26,11 @@ services:
     image: kibana:8.2.0
     environment:
       - SERVERNAME=kibana
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_HOSTS=http://elastic:9200
     volumes:
       - ./kibanadata:/usr/share/kibana/data
     depends_on:
-      - elasticsearch
+      - elastic
     networks:
       - opd-internal
 
